@@ -1,0 +1,179 @@
+
+@contentType = application/json
+@createdAt = {{$datetime iso8601}}
+@baseUrl = http://localhost:3001/api
+# @baseUrl = {{$processEnv URL}}
+# @_id = 62fd3c826ae47f98e85e0fe1
+# @_id = 62fd3c5f6ae47f98e85e0fde
+@_id = {{login.response.body._id}}
+# @authToken = {{login.response.body.token}}
+@authToken = {{login.response.body.accessToken}}
+# @authToken = 1234565432
+# @authToken = {{login.response.headers.X-AuthToken}}
+
+
+
+# @name login
+# login de ADMIN
+POST {{baseUrl}}/auth/login HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "email": "jesielvirtualsa@gmail.com",
+  "password": "1234567890"
+}
+###
+# @name login
+# login de ADMIN2
+POST {{baseUrl}}/auth/login HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "email": "admin2@admin2.com",
+  "password": "2345678901"
+}
+###
+# @name login
+# login de Test1
+POST {{baseUrl}}/auth/login HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "email": "test1@test1.com",
+  "password": "3456789012"
+}
+###
+# @name login
+# login de Test2
+POST {{baseUrl}}/auth/login HTTP/1.1
+Content-Type: {{contentType}}
+
+{
+  "email": "test2@test2.com",
+  "password": "4567890123"
+}
+###
+
+
+
+# @name users
+GET {{baseUrl}}/users HTTP/1.1
+Authorization: {{authToken}}
+###
+
+
+
+# @name createUserAdmin2
+# Crear de Admin2
+POST {{baseUrl}}/users HTTP/1.1
+Authorization: {{authToken}}
+Content-Type: {{contentType}}
+
+{
+  "rol": "admin",
+  "citizenshipNumberId": "2345678901",
+  "name": "admin2",
+  "surname": "admin2",
+  "email": "admin2@admin2.com",
+  "password": "2345678901",
+  "phone": "2345678901",
+  "address": "aaa",
+  "userDelete": "1234567890",
+  "deletedAt": "aaa"
+}
+###
+# @name createUserTest1
+# Crear de Test1
+POST {{baseUrl}}/users HTTP/1.1
+Authorization: {{authToken}}
+Content-Type: {{contentType}}
+
+{
+  "citizenshipNumberId": "3456789012",
+  "name": "Test1",
+  "surname": "Test1",
+  "email": "test1@test1.com",
+  "password": "3456789012",
+  "phone": "3456789012",
+  "address": "aaa",
+  "userDelete": "1234567890",
+  "deletedAt": "aaa"
+}
+###
+# @name createUserTest2
+# Crear de Test2
+POST {{baseUrl}}/users HTTP/1.1
+Authorization: {{authToken}}
+Content-Type: {{contentType}}
+
+{
+  "citizenshipNumberId": "4567890123",
+  "name": "Test2",
+  "surname": "Test2",
+  "email": "test2@test2.com",
+  "password": "4567890123",
+  "phone": "4567890123",
+  "address": "aaa",
+  "userDelete": "1234567890",
+  "deletedAt": "aaa"
+}
+###
+
+
+
+# @name user
+GET {{baseUrl}}/user/{{_id}} HTTP/1.1
+Authorization: {{authToken}}
+###
+
+
+
+# @name updateUser
+PUT {{baseUrl}}/user/{{_id}} HTTP/1.1
+Authorization: {{authToken}}
+Content-Type: {{contentType}}
+
+{
+  "rol": "admin",
+  "citizenshipNumberId": "1193420246",
+  "name": "Jesiel Obed",
+  "surname": "editado",
+  "email": "jesielto14@gmail.com",
+  "phone": "3218739349",
+  "address": "IhIQ08HG81n!",
+  "userCreate": "1193420246",
+  "userUpdate": "1193420246",
+  "userDelete": "1193420246",
+  "deletedAt": ""
+}
+###
+
+
+
+# @name deleteUser
+DELETE {{baseUrl}}/user/{{_id}} HTTP/1.1
+Authorization: {{authToken}}
+###
+
+
+
+# @name photo
+GET {{baseUrl}}/photo/{{_id}} HTTP/1.1
+Authorization: {{authToken}}
+###
+
+
+
+# @name matter-cancellations
+GET {{baseUrl}}/matter-cancellations HTTP/1.1
+Authorization: {{authToken}}
+###
+
+
+
+# @name matter-cancellation
+# GET {{baseUrl}}/matter-cancellation/{{_id}} HTTP/1.1
+GET {{baseUrl}}/matter-cancellation/630bef5f64ed61e950385924 HTTP/1.1
+Authorization: {{authToken}}
+###
+

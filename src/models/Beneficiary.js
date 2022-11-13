@@ -52,9 +52,10 @@ const BeneficiarySchema = new mongoose.Schema(
       ],
     },
     citizenshipNumberId: {
-      type: Number,
+      type: String,
       required: true,
       unique: true,
+      trim: true,
     },
     email: {
       type: String,
@@ -65,6 +66,12 @@ const BeneficiarySchema = new mongoose.Schema(
     cellPhoneNumber: {
       type: String,
       max: 20,
+      trim: true,
+    },
+    address: {
+      type: String,
+      min: 6,
+      max: 100,
       trim: true,
     },
     academicProgram: {
@@ -103,16 +110,11 @@ const BeneficiarySchema = new mongoose.Schema(
       default: 'No aplica',
       enum: ['No aplica', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
     },
-    address: {
-      type: String,
-      required: true,
-      min: 6,
-      max: 100,
-      trim: true,
-    },
+
     birthDate: {
       type: Date,
       required: true,
+      trim: true,
     },
     // countryOfBirth: {
     //   type: String,
@@ -162,6 +164,7 @@ const BeneficiarySchema = new mongoose.Schema(
       // ref: 'Photo',
       // type: mongoose.Schema.Types.ObjectId
       type: String,
+      trim: true,
     },
     userCreate: {
       ref: 'User',

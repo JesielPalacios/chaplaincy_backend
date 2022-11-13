@@ -11,7 +11,7 @@ import fileUpload from 'express-fileupload'
 
 // Initializations
 const app = express()
-createAdmin()
+// createAdmin()
 dotenv.config()
 
 // Settings
@@ -30,7 +30,7 @@ app.use(fileUpload())
 app.use('/api', indexRoutes)
 
 // // this folders for this application will be used to store public file images
-// app.use('/uploads', express.static(path.resolve('uploads')))
+app.use('/uploads', express.static(path.resolve('uploads')))
 
 // // Upload Endpoint
 // app.post('/uploads', (req, res) => {

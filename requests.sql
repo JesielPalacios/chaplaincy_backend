@@ -1,3 +1,5 @@
-db('hackathon_development').collection('customers').find({}).limit(100).toArray()
+-- Active: 1668152624709@@127.0.0.1@27017@chaplaincy_development
 
-db('hackathon_development').collection('customers').drop()
+db('chaplaincy_development').collection('beneficiaries').find({}).limit(100).toArray();
+
+db('chaplaincy_development').collection('beneficiaries').drop();

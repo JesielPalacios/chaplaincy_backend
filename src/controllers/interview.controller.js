@@ -2,7 +2,7 @@ import CryptoJS from 'crypto-js'
 import fs from 'fs-extra'
 import path from 'path'
 
-import BeneficiarySchema from '../models/Beneficiary'
+import InterviewSchema from '../models/Interview'
 import ImageSchema from '../models/Photo'
 
 export function encryptPassword(passwordToEncrypt) {
@@ -12,18 +12,18 @@ export function encryptPassword(passwordToEncrypt) {
   ).toString()
 }
 
-async function getAllBeneficiaries(req, res) {
+async function getAllInterviews(req, res) {
   const query = req.query.new
 
   try {
-    const beneficiarys = query
-      ? await BeneficiarySchema.find().sort({ _id: -1 }).limit(5)
-      : await BeneficiarySchema.find()
+    const interviews = query
+      ? await InterviewSchema.find().sort({ _id: -1 }).limit(5)
+      : await InterviewSchema.find()
 
-    if (beneficiarys.length === 0)
+    if (interviews.length === 0)
       // res.status(204).json({ message: "There aren't beneficiarys" })
       res.status(200).json([])
-    else res.status(200).json(beneficiarys)
+    else res.status(200).json(interviews)
   } catch (err) {
     res.status(500).json(err)
   }
@@ -55,7 +55,7 @@ async function createNewBeneficiary(req, res) {
     return res.status(400).json({ message: 'Some info is missing' })
   }
 
-  const storedBeneficiary = await BeneficiarySchema.findOne({
+  const storedBeneficiary = await InterviewSchema.findOne({
     citizenshipNumberId: req.body.citizenshipNumberId,
   })
 
@@ -67,12 +67,12 @@ async function createNewBeneficiary(req, res) {
       req.body.userUpdate = req.user.id
 
       let newBeneficiary = req.files
-        ? new BeneficiarySchema({
+        ? new InterviewSchema({
             ...req.body,
             beneficiaryPhoto:
               '/uploads/' + req.files.beneficiaryPhoto.name.split(' ').join(''),
           })
-        : new BeneficiarySchema({ ...req.body })
+        : new InterviewSchema({ ...req.body })
 
       if (req.files) {
         if (req.files === null) {
@@ -108,7 +108,7 @@ async function createNewBeneficiary(req, res) {
 
 async function getOneBeneficiaryById(req, res) {
   try {
-    const beneficiary = await BeneficiarySchema.findById(req.params.id)
+    const beneficiary = await InterviewSchema.findById(req.params.id)
     // const { password, ...others } = beneficiary._doc
     // res.status(200).json(others)
     res.status(200).json(beneficiary)
@@ -121,7 +121,7 @@ async function updateOneBeneficiaryById(req, res) {
   if (req.body.password) req.body.password = encryptPassword(req.body.password)
 
   try {
-    let updatedBeneficiary = await BeneficiarySchema.findByIdAndUpdate(
+    let updatedBeneficiary = await InterviewSchema.findByIdAndUpdate(
       req.params.id,
       {
         $set: req.body,
@@ -167,7 +167,7 @@ async function updateOneBeneficiaryById(req, res) {
     // Update in DB
     const savedPlant = await updatedBeneficiary.save()
 
-    // const savedPlant = await BeneficiarySchema.findByIdAndUpdate(
+    // const savedPlant = await InterviewSchema.findByIdAndUpdate(
     //   req.params.id,
     //   {
     //     $set: updatedBeneficiary,
@@ -183,7 +183,7 @@ async function updateOneBeneficiaryById(req, res) {
 
 async function deleteOneBeneficiaryById(req, res) {
   try {
-    await BeneficiarySchema.findByIdAndDelete(req.params.id)
+    await InterviewSchema.findByIdAndDelete(req.params.id)
 
     let image = await ImageSchema.findOneAndRemove({
       photoSubject: req.params.id,
@@ -201,7 +201,7 @@ async function deleteOneBeneficiaryById(req, res) {
 }
 
 export default {
-  getAllBeneficiaries,
+  getAllInterviews,
   createNewBeneficiary,
   getOneBeneficiaryById,
   updateOneBeneficiaryById,

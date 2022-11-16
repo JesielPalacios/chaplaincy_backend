@@ -3,6 +3,7 @@ import fs from 'fs-extra'
 import path from 'path'
 
 import InterviewSchema from '../models/Interview'
+import UserSchema from '../models/User'
 import ImageSchema from '../models/Photo'
 
 export function encryptPassword(passwordToEncrypt) {
@@ -29,20 +30,16 @@ async function getAllInterviews(req, res) {
   }
 }
 
-async function createNewBeneficiary(req, res) {
+async function createNewInterview(req, res) {
   function checkDataValidation(reqBody) {
     if (
       !(
-        reqBody.firstName ||
-        reqBody.firstSurname ||
-        reqBody.gender ||
-        reqBody.typeCitizenshipNumberId ||
-        reqBody.citizenshipNumberId ||
-        reqBody.address ||
-        reqBody.birthDate ||
-        reqBody.birthCountry ||
-        reqBody.birthDepartment ||
-        reqBody.birthCity
+        reqBody.topic ||
+        reqBody.topicDescription ||
+        reqBody.actionsDescription ||
+        reqBody.referralDepartment ||
+        reqBody.status ||
+        reqBody.beneficiary
       )
     ) {
       return true
@@ -55,127 +52,53 @@ async function createNewBeneficiary(req, res) {
     return res.status(400).json({ message: 'Some info is missing' })
   }
 
-  const storedBeneficiary = await InterviewSchema.findOne({
-    citizenshipNumberId: req.body.citizenshipNumberId,
-  })
+  const storedUser = await UserSchema.findById(req.user.id)
 
-  if (storedBeneficiary) {
-    res.status(400).json({ message: 'Beneficiary already exist' })
+  // const storedInterview = await InterviewSchema.findOne({
+  //   topicDescription: req.body.topicDescription,
+  // })
+
+  if (!storedUser) {
+    res.status(400).json({ message: 'Error' })
+    // } else if (storedInterview) {
+    // res.status(400).json({ message: 'Interview already exist' })
+  } else if (!req.body.beneficiary) {
+    res.status(400).json({ message: 'Beneficiary is needed' })
   } else {
     try {
-      req.body.userCreate = req.user.id
-      req.body.userUpdate = req.user.id
+      req.body.userCreate = storedUser.citizenshipNumberId
+      req.body.userUpdate = storedUser.citizenshipNumberId
 
-      let newBeneficiary = req.files
-        ? new InterviewSchema({
-            ...req.body,
-            beneficiaryPhoto:
-              '/uploads/' + req.files.beneficiaryPhoto.name.split(' ').join(''),
-          })
-        : new InterviewSchema({ ...req.body })
+      let newInterview = new InterviewSchema({ ...req.body })
 
-      if (req.files) {
-        if (req.files === null) {
-          return res.status(400).json({ message: 'No file uploaded' })
-        }
-
-        const file = req.files.beneficiaryPhoto
-
-        const newImage = new ImageSchema({
-          imagePath: '/uploads/' + file.name.split(' ').join(''),
-          userCreate: req.user.id,
-          userUpdate: req.user.id,
-          photoSubject: newBeneficiary._id.valueOf(),
-        })
-        await newImage.save()
-
-        file.mv('./uploads/' + file.name.split(' ').join(''), (err) => {
-          if (err) {
-            console.error(err)
-            return res.status(500).send(err)
-          }
-          // res.json({ fileName: file.name, filePath: `/uploads/${file.name}` })
-        })
-      }
-
-      const savedBeneficiary = await newBeneficiary.save()
-      res.status(201).json(savedBeneficiary)
+      const savedInterview = await newInterview.save()
+      res.status(201).json(savedInterview)
     } catch (err) {
       res.status(500).json(err)
     }
   }
 }
 
-async function getOneBeneficiaryById(req, res) {
+async function getOneInterviewById(req, res) {
   try {
-    const beneficiary = await InterviewSchema.findById(req.params.id)
-    // const { password, ...others } = beneficiary._doc
-    // res.status(200).json(others)
-    res.status(200).json(beneficiary)
+    const interview = await InterviewSchema.findById(req.params.id)
+    res.status(200).json(interview)
   } catch (err) {
     res.status(500).json(err)
   }
 }
 
-async function updateOneBeneficiaryById(req, res) {
-  if (req.body.password) req.body.password = encryptPassword(req.body.password)
-
+async function updateOneInterviewById(req, res) {
   try {
-    let updatedBeneficiary = await InterviewSchema.findByIdAndUpdate(
+    let updatedInterview = await InterviewSchema.findByIdAndUpdate(
       req.params.id,
       {
         $set: req.body,
       },
       { new: true }
     )
-    console.log('updatedBeneficiary', updatedBeneficiary)
 
-    updatedBeneficiary.beneficiaryPhoto =
-      '/uploads/' + req.files.plantPhoto.name.split(' ').join('')
-
-    if (req.files) {
-      if (req.files === null) {
-        return res.status(400).json({ message: 'No file uploaded' })
-      }
-
-      let image = PhotoSchema.findOne({
-        photoSubject: req.params.id,
-      })
-
-      // Delete old image file
-      if (image) {
-        await fs.unlink(path.resolve('.' + image.imagePath))
-      }
-
-      // Add new image data
-      const file = req.files.plantPhoto
-
-      image.imagePath = '/uploads/' + file.name.split(' ').join('')
-      image.photoSubject = updatedBeneficiary._id.valueOf()
-      image.userUpdate = req.params.id
-      await image.save()
-
-      // Add new image file
-      file.mv('./uploads' + file.name.split(' ').join(''), (err) => {
-        if (err) {
-          console.error(err)
-          return res.status(500).send(err)
-        }
-      })
-    }
-
-    // Update in DB
-    const savedPlant = await updatedBeneficiary.save()
-
-    // const savedPlant = await InterviewSchema.findByIdAndUpdate(
-    //   req.params.id,
-    //   {
-    //     $set: updatedBeneficiary,
-    //   },
-    //   { new: true }
-    // )
-
-    res.status(204).json(savedPlant)
+    res.status(201).json(updatedInterview)
   } catch (err) {
     res.status(500).json(err)
   }
@@ -202,8 +125,8 @@ async function deleteOneBeneficiaryById(req, res) {
 
 export default {
   getAllInterviews,
-  createNewBeneficiary,
-  getOneBeneficiaryById,
-  updateOneBeneficiaryById,
+  createNewInterview,
+  getOneInterviewById,
+  updateOneInterviewById,
   deleteOneBeneficiaryById,
 }

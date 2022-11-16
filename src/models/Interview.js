@@ -27,9 +27,7 @@ const InterviewSchema = new mongoose.Schema(
     topicDescription: {
       type: String,
       required: true,
-      // unique: true,
       trim: true,
-      lowercase: true,
     },
     actionsDescription: {
       type: String,
@@ -48,42 +46,24 @@ const InterviewSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ['En proceso', 'Cancelada', 'Completada'],
+      enum: ['Pendiente', 'Cancelada', 'Completada'],
       default: 'No_necesita_remision',
     },
     beneficiary: {
-      ref: 'Beneficiary',
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
+      required: true,
+      trim: true,
     },
     userCreate: {
-      ref: 'User',
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
+      required: true,
+      trim: true,
     },
     userUpdate: {
-      ref: 'User',
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
+      required: true,
+      trim: true,
     },
-    // patient: {
-    //   type: String,
-    //   required: true,
-    //   trim: true,
-    //   minLength: 10,
-    //   maxLength: 10,
-    // },
-    // userCreate: {
-    //   type: String,
-    //   required: true,
-    //   trim: true,
-    //   minLength: 10,
-    //   maxLength: 10,
-    // },
-    // userUpdate: {
-    //   type: String,
-    //   required: true,
-    //   trim: true,
-    //   minLength: 10,
-    //   maxLength: 10,
-    // },
   },
   {
     timestamps: true,

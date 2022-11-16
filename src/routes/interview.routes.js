@@ -12,16 +12,16 @@ router
   .get([verifyJwt, authJwt(['admin'])], interviewCtrl.getAllInterviews)
 
   // CREATE A NEW INTERVIEW
-  .post([verifyJwt, authJwt(['admin'])], interviewCtrl.createNewBeneficiary)
+  .post([verifyJwt, authJwt(['admin'])], interviewCtrl.createNewInterview)
 
 router
-  .route('/beneficiary/:id')
+  .route('/interview/:id')
 
   // GET ONE INTERVIEW BY ID
-  .get([verifyJwt, authJwt(['admin'])], interviewCtrl.getOneBeneficiaryById)
+  .get([verifyJwt, authJwt(['admin'])], interviewCtrl.getOneInterviewById)
 
   // UPDATE ONE INTERVIEW BY ID
-  .put([verifyJwt, authJwt(['admin'])], interviewCtrl.updateOneBeneficiaryById)
+  .put([verifyJwt, authJwt(['admin'])], interviewCtrl.updateOneInterviewById)
 
   // DELETE ONE INTERVIEW BY ID
   .delete(

@@ -6,12 +6,13 @@ import path from 'path'
 import compression from 'compression'
 import helmet from 'helmet'
 import indexRoutes from './routes'
-import { createAdmin } from '../initialSetup'
+import { createAdmin, createBeneficiaries } from '../initialSetup'
 import fileUpload from 'express-fileupload'
 
 // Initializations
 const app = express()
-// createAdmin()
+createAdmin()
+// createBeneficiaries()
 dotenv.config()
 
 // Settings

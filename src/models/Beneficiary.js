@@ -167,12 +167,14 @@ const BeneficiarySchema = new mongoose.Schema(
       trim: true,
     },
     userCreate: {
-      ref: 'User',
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
+      required: true,
+      trim: true,
     },
     userUpdate: {
-      ref: 'User',
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
+      required: true,
+      trim: true,
     },
   },
   {

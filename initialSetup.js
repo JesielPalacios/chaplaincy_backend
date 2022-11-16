@@ -3,34 +3,46 @@ import { encryptPassword } from './src/controllers/user.controller'
 import UserSchema from './src/models/User'
 import BeneficiarySchema from './src/models/Beneficiary'
 
+let userCreate = '1234567890'
+let userUpdate = '1234567890'
+
 export const createAdmin = async () => {
   // check for an existing admin user--------------------------
-  const user = await UserSchema.findOne({ email: 'jesielvirtualsa@gmail.com' })
+  const user = await UserSchema.findOne({
+    email: 'luis.angel@capellania.unac.edu.co',
+  })
 
   try {
     if (!user) {
       // create a new admin user
       await UserSchema.create({
         role: 'admin',
-        // citizenshipNumberId: uuid(),
-        citizenshipNumberId: 1234567890,
-        name: 'super',
-        surname: 'admin',
         email: process.env.EMAIL,
         password: encryptPassword(process.env.PASSWORD),
-        phone: 1234567890,
-        address: 'aaa',
+        firstName: 'Luis',
+        secondName: 'Enrique',
+        firstSurname: 'Peña',
+        secondSurname: 'Nieto',
+        gender: 'Masculino',
+        typeCitizenshipNumberId: 'Cédula de ciudadanía',
+        citizenshipNumberId: '1234567890',
+        cellPhoneNumber: '3187952111',
+        address: 'wqwqwdqwdqwdqwd',
+        birthDate: '2000-7-17',
+        birthCountry: 'Colombia',
+        birthDepartment: 'Antioquia',
+        birthCity: 'Medellín',
         userCreate: '1000000',
         userUpdate: '1000000',
-        userDelete: '1000000',
-        deletedAt: 'aaa',
       })
-      console.log('admin user created!')
+      console.log('admin user created!🔥🔥🔥')
     }
   } catch (error) {
     console.log(error)
   }
+}
 
+export const createBeneficiaries = async () => {
   // check for an existing beneficiary--------------------------
   let beneficiary = await BeneficiarySchema.findOne({
     citizenshipNumberId: '577881',
@@ -42,7 +54,7 @@ export const createAdmin = async () => {
       await BeneficiarySchema.create({
         firstName: 'Luis',
         secondName: 'Enrique',
-        firstSurname: 'Álverez',
+        firstSurname: 'Alvarez',
         secondSurname: 'Plaza',
         gender: 'Masculino',
         typeCitizenshipNumberId: 'Cédula de ciudadanía',
@@ -50,7 +62,7 @@ export const createAdmin = async () => {
         email: 'lealvarezp@unac.edu.co',
         cellPhoneNumber: '3145763198',
         address: 'wqwqwdqwdqwdqwd',
-        birthDate: '2001-01-06',
+        birthDate: '2000-7-17',
         birthCountry: 'Venezuela',
         birthDepartment: 'Distrito Metropolitano de Caracas',
         birthCity: 'Caracas',
@@ -58,11 +70,11 @@ export const createAdmin = async () => {
         studentCode: '20181062490',
         semester: '10',
         beneficiaryPhoto: 'null',
-        userCreate: '63682e12549e54f028425de9',
-        userUpdate: '63682e12549e54f028425de9',
+        userCreate: userCreate,
+        userUpdate: userCreate,
       })
 
-      console.log('Luis Enrique Álvarez Plaza created!')
+      console.log('Luis Enrique Álvarez Plaza created!🔥🔥🔥')
     }
   } catch (error) {
     console.log(error)
@@ -87,7 +99,7 @@ export const createAdmin = async () => {
         email: 'jdbaldovinor@unac.edu.co',
         cellPhoneNumber: '3227181076',
         address: 'wqwqwdqwdqwdqwd',
-        birthDate: '1999-09-13',
+        birthDate: '2000-7-17',
         birthCountry: 'Colombia',
         birthDepartment: 'Sucre',
         birthCity: 'Guaranda',
@@ -95,11 +107,11 @@ export const createAdmin = async () => {
         studentCode: '20171067490',
         semester: '10',
         beneficiaryPhoto: 'null',
-        userCreate: '63682e12549e54f028425de9',
-        userUpdate: '63682e12549e54f028425de9',
+        userCreate: userCreate,
+        userUpdate: userCreate,
       })
 
-      console.log('José Baldovino Rojas created!')
+      console.log('José Baldovino Rojas created!🔥🔥🔥')
     }
   } catch (error) {
     console.log(error)
@@ -124,7 +136,7 @@ export const createAdmin = async () => {
         email: 'pacastanedac@unac.edu.co',
         cellPhoneNumber: '3145763198',
         address: 'wqwqwdqwdqwdqwd',
-        birthDate: '2001-01-06',
+        birthDate: '2000-7-17',
         birthCountry: 'Colombia',
         birthDepartment: 'Guaviare',
         birthCity: 'El retorno',
@@ -132,11 +144,11 @@ export const createAdmin = async () => {
         studentCode: '20181030290',
         semester: '10',
         beneficiaryPhoto: 'null',
-        userCreate: '63682e12549e54f028425de9',
-        userUpdate: '63682e12549e54f028425de9',
+        userCreate: userCreate,
+        userUpdate: userCreate,
       })
 
-      console.log('Pedro Alejandro Castañena Cifuentes created!')
+      console.log('Pedro Alejandro Castañena Cifuentes created!🔥🔥🔥')
     }
   } catch (error) {
     console.log(error)
@@ -161,7 +173,7 @@ export const createAdmin = async () => {
         email: 'echaverra@unac.edu.co',
         cellPhoneNumber: '3015214618',
         address: 'wqwqwdqwdqwdqwd',
-        birthDate: '2001-01-06',
+        birthDate: '2000-7-17',
         birthCountry: 'Colombia',
         birthDepartment: 'Valle del Cauca',
         birthCity: 'Buenaventura',
@@ -169,11 +181,11 @@ export const createAdmin = async () => {
         studentCode: '20141012245',
         semester: '10',
         beneficiaryPhoto: 'null',
-        userCreate: '63682e12549e54f028425de9',
-        userUpdate: '63682e12549e54f028425de9',
+        userCreate: userCreate,
+        userUpdate: userCreate,
       })
 
-      console.log('Efraín Chaverra Quinto created!')
+      console.log('Efraín Chaverra Quinto created!🔥🔥🔥')
     }
   } catch (error) {
     console.log(error)
@@ -198,7 +210,7 @@ export const createAdmin = async () => {
         email: 'marian.cordoba@unac.edu.co',
         cellPhoneNumber: '3143399194',
         address: 'wqwqwdqwdqwdqwd',
-        birthDate: '1998-10-22',
+        birthDate: '2000-7-17',
         birthCountry: 'Colombia',
         birthDepartment: 'Chocó',
         birthCity: 'Unguía',
@@ -206,11 +218,11 @@ export const createAdmin = async () => {
         studentCode: '20181018290',
         semester: '10',
         beneficiaryPhoto: 'null',
-        userCreate: '63682e12549e54f028425de9',
-        userUpdate: '63682e12549e54f028425de9',
+        userCreate: userCreate,
+        userUpdate: userCreate,
       })
 
-      console.log('Marian Elena Córdoba Batista created!')
+      console.log('Marian Elena Córdoba Batista created!🔥🔥🔥')
     }
   } catch (error) {
     console.log(error)
@@ -235,7 +247,7 @@ export const createAdmin = async () => {
         email: 'yaecheverriay@unac.edu.co',
         cellPhoneNumber: '3126546363',
         address: 'wqwqwdqwdqwdqwd',
-        birthDate: '2001-01-06',
+        birthDate: '2000-7-17',
         birthCountry: 'Colombia',
         birthDepartment: 'Sucre',
         birthCity: 'Guaranda',
@@ -243,11 +255,11 @@ export const createAdmin = async () => {
         studentCode: '20181032022',
         semester: '9',
         beneficiaryPhoto: 'null',
-        userCreate: '63682e12549e54f028425de9',
-        userUpdate: '63682e12549e54f028425de9',
+        userCreate: userCreate,
+        userUpdate: userCreate,
       })
 
-      console.log('Yeith Alberto Echeverria Yepez created!')
+      console.log('Yeith Alberto Echeverria Yepez created!🔥🔥🔥')
     }
   } catch (error) {
     console.log(error)
@@ -272,7 +284,7 @@ export const createAdmin = async () => {
         email: 'caeladinod@unac.edu.co',
         cellPhoneNumber: '3126546363',
         address: 'wqwqwdqwdqwdqwd',
-        birthDate: '2001-01-06',
+        birthDate: '2000-7-17',
         birthCountry: 'Colombia',
         birthDepartment: 'Cundinamarca',
         birthCity: 'Bogotá',
@@ -280,11 +292,11 @@ export const createAdmin = async () => {
         studentCode: '20172026190',
         semester: '10',
         beneficiaryPhoto: 'null',
-        userCreate: '63682e12549e54f028425de9',
-        userUpdate: '63682e12549e54f028425de9',
+        userCreate: userCreate,
+        userUpdate: userCreate,
       })
 
-      console.log('Cristian Alexis Esteban Ladino Dueñas created!')
+      console.log('Cristian Alexis Esteban Ladino Dueñas created!🔥🔥🔥')
     }
   } catch (error) {
     console.log(error)
@@ -309,7 +321,7 @@ export const createAdmin = async () => {
         email: 'jipalaciosc@unac.edu.co',
         cellPhoneNumber: '3145406467',
         address: 'wqwqwdqwdqwdqwd',
-        birthDate: '2001-01-06',
+        birthDate: '2000-7-17',
         birthCountry: 'Colombia',
         birthDepartment: 'Chocó',
         birthCity: 'Itsmina',
@@ -317,11 +329,11 @@ export const createAdmin = async () => {
         studentCode: '20172020690',
         semester: '10',
         beneficiaryPhoto: 'null',
-        userCreate: '63682e12549e54f028425de9',
-        userUpdate: '63682e12549e54f028425de9',
+        userCreate: userCreate,
+        userUpdate: userCreate,
       })
 
-      console.log('Jackson Isaac Palacios Córdoba created!')
+      console.log('Jackson Isaac Palacios Córdoba created!🔥🔥🔥')
     }
   } catch (error) {
     console.log(error)
@@ -346,7 +358,7 @@ export const createAdmin = async () => {
         email: 'jopalacioss@unac.edu.co',
         cellPhoneNumber: '3218739349',
         address: 'wqwqwdqwdqwdqwd',
-        birthDate: '2001-05-06',
+        birthDate: '2000-7-17',
         birthCountry: 'Colombia',
         birthDepartment: 'Chocó',
         birthCity: 'Quibdó',
@@ -354,11 +366,11 @@ export const createAdmin = async () => {
         studentCode: '20181067390',
         semester: '10',
         beneficiaryPhoto: 'null',
-        userCreate: '63682e12549e54f028425de9',
-        userUpdate: '63682e12549e54f028425de9',
+        userCreate: userCreate,
+        userUpdate: userCreate,
       })
 
-      console.log('Jesiel Obed Palacios Salinas created!')
+      console.log('Jesiel Obed Palacios Salinas created!🔥🔥🔥')
     }
   } catch (error) {
     console.log(error)
@@ -383,7 +395,7 @@ export const createAdmin = async () => {
         email: 'kevin.perez@unac.edu.co',
         cellPhoneNumber: '3177148512',
         address: 'wqwqwdqwdqwdqwd',
-        birthDate: '2001-02-06',
+        birthDate: '2000-7-17',
         birthCountry: 'Colombia',
         birthDepartment: 'San Andrés y Providencia',
         birthCity: 'San Andrés y Providencia',
@@ -391,11 +403,11 @@ export const createAdmin = async () => {
         studentCode: '20181079190',
         semester: '10',
         beneficiaryPhoto: 'null',
-        userCreate: '63682e12549e54f028425de9',
-        userUpdate: '63682e12549e54f028425de9',
+        userCreate: userCreate,
+        userUpdate: userCreate,
       })
 
-      console.log('Kevin Andrés Pérez Merchan created!')
+      console.log('Kevin Andrés Pérez Merchan created!🔥🔥🔥')
     }
   } catch (error) {
     console.log(error)
@@ -420,7 +432,7 @@ export const createAdmin = async () => {
         email: 'neider.rodriguez@unac.edu',
         cellPhoneNumber: '3005588181',
         address: 'wqwqwdqwdqwdqwd',
-        birthDate: '2001-02-06',
+        birthDate: '2000-7-17',
         birthCountry: 'Colombia',
         birthDepartment: 'Cundinamarca',
         birthCity: 'Bogotá',
@@ -428,11 +440,11 @@ export const createAdmin = async () => {
         studentCode: '20181086390',
         semester: '10',
         beneficiaryPhoto: 'null',
-        userCreate: '63682e12549e54f028425de9',
-        userUpdate: '63682e12549e54f028425de9',
+        userCreate: userCreate,
+        userUpdate: userCreate,
       })
 
-      console.log('Neider Steven Rodríguez Camelo created!')
+      console.log('Neider Steven Rodríguez Camelo created!🔥🔥🔥')
     }
   } catch (error) {
     console.log(error)
@@ -457,7 +469,7 @@ export const createAdmin = async () => {
         email: 'iaromerod@unac.edu.co',
         cellPhoneNumber: '3177148512',
         address: 'wqwqwdqwdqwdqwd',
-        birthDate: '2001-02-06',
+        birthDate: '2000-7-17',
         birthCountry: 'Colombia',
         birthDepartment: 'Cesar',
         birthCity: 'Valledupar',
@@ -465,11 +477,11 @@ export const createAdmin = async () => {
         studentCode: '20181012122',
         semester: '10',
         beneficiaryPhoto: 'null',
-        userCreate: '63682e12549e54f028425de9',
-        userUpdate: '63682e12549e54f028425de9',
+        userCreate: userCreate,
+        userUpdate: userCreate,
       })
 
-      console.log('Isidro Anthony Romero Díaz created!')
+      console.log('Isidro Anthony Romero Díaz created!🔥🔥🔥')
     }
   } catch (error) {
     console.log(error)
@@ -494,7 +506,7 @@ export const createAdmin = async () => {
         email: 'fjsandovala@unac.edu.co',
         cellPhoneNumber: '3177148512',
         address: 'wqwqwdqwdqwdqwd',
-        birthDate: '2001-02-06',
+        birthDate: '2000-7-17',
         birthCountry: 'Colombia',
         birthDepartment: 'Cesar',
         birthCity: 'Valledupar',
@@ -502,11 +514,11 @@ export const createAdmin = async () => {
         studentCode: '20171010390',
         semester: '10',
         beneficiaryPhoto: 'null',
-        userCreate: '63682e12549e54f028425de9',
-        userUpdate: '63682e12549e54f028425de9',
+        userCreate: userCreate,
+        userUpdate: userCreate,
       })
 
-      console.log('Francisco Javier Sandoval Aparicio created!')
+      console.log('Francisco Javier Sandoval Aparicio created!🔥🔥🔥')
     }
   } catch (error) {
     console.log(error)

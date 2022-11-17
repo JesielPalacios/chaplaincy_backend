@@ -1,8 +1,11 @@
-import UserSchema from '../models/User';
+import UserSchema from '../models/User'
 import CryptoJS from 'crypto-js'
 
 export function encryptPassword(passwordToEncrypt) {
-  return CryptoJS.AES.encrypt(passwordToEncrypt, process.env.PASS_SEC).toString()
+  return CryptoJS.AES.encrypt(
+    passwordToEncrypt,
+    process.env.PASS_SEC
+  ).toString()
 }
 
 /**
@@ -21,7 +24,8 @@ async function getAllUsers(req, res) {
       ? await UserSchema.find().sort({ _id: -1 }).limit(5)
       : await UserSchema.find()
 
-    if (users.length === 0) res.status(204).json({ message: 'There aren\'t users' })
+    if (users.length === 0)
+      res.status(204).json({ message: "There aren't users" })
 
     res.status(200).json(users)
   } catch (err) {
@@ -65,7 +69,7 @@ async function updateAnUserById(req, res) {
     const updatedUser = await UserSchema.findByIdAndUpdate(
       req.params.id,
       {
-        $set: req.body
+        $set: req.body,
       },
       { new: true }
     )
@@ -85,4 +89,37 @@ async function deleteAnUserById(req, res) {
   }
 }
 
-export default { getAllUsers, createNewUser, getAnUserById, updateAnUserById, deleteAnUserById }
+async function userStats(req, res) {
+  const date = new Date()
+  const currentYear = new Date(date.setFullYear(date.getFullYear()))
+  // const lastYear = new Date(date.setFullYear(date.getFullYear() - 1))
+
+  try {
+    const data = await UserSchema.aggregate([
+      { $match: { createdAt: { $gte: currentYear } } },
+      {
+        $project: {
+          month: { $month: '$createdAt' },
+        },
+      },
+      {
+        $group: {
+          _id: '$month',
+          total: { $sum: 1 },
+        },
+      },
+    ])
+    res.status(200).json(data)
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
+export default {
+  getAllUsers,
+  createNewUser,
+  getAnUserById,
+  updateAnUserById,
+  deleteAnUserById,
+  userStats,
+}

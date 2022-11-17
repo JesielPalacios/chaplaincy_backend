@@ -32,4 +32,10 @@ router
     beneficiaryCtrl.deleteOneBeneficiaryById
   )
 
+router
+  .route('/beneficiaryStats')
+
+  // GET BENEFICIARIES STATS
+  .get([verifyJwt, authJwt(['admin'])], beneficiaryCtrl.beneficiaryStats)
+
 export default router

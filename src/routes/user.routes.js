@@ -26,4 +26,9 @@ router
   // DELETE AN USER BY ID
   .delete([verifyJwt, authJwt(['admin'])], userCtrl.deleteAnUserById)
 
+router
+  .route('/interviewStats')
+  // GET USERS STATS
+  .get([verifyJwt, authJwt(['admin'])], userCtrl.userStats)
+
 export default router

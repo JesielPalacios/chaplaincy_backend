@@ -29,4 +29,10 @@ router
     interviewCtrl.deleteOneBeneficiaryById
   )
 
+router
+  .route('/statsInterviews')
+
+  // GET INTERVIEWS STATS
+  .get([verifyJwt, authJwt(['admin'])], interviewCtrl.interviewStats)
+
 export default router

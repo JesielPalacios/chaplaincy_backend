@@ -3,7 +3,7 @@ import app from './app'
 
 mongoose
   .connect(process.env.MONGO_URL)
-  .then(console.log('DBConecction Successfull!'))
+  .then(console.log('DBConecction Successfull!✅'))
   .catch((error) => console.log(error))
 
 app.listen(app.get('port'), () => {

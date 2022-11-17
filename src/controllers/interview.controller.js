@@ -6,13 +6,6 @@ import InterviewSchema from '../models/Interview'
 import UserSchema from '../models/User'
 import ImageSchema from '../models/Photo'
 
-export function encryptPassword(passwordToEncrypt) {
-  return CryptoJS.AES.encrypt(
-    passwordToEncrypt,
-    process.env.PASS_SEC
-  ).toString()
-}
-
 async function getAllInterviews(req, res) {
   const query = req.query.new
 
@@ -123,10 +116,151 @@ async function deleteOneBeneficiaryById(req, res) {
   }
 }
 
+async function interviewStats(req, res) {
+  const date = new Date()
+  const currentYear = new Date(date.setFullYear(date.getFullYear()))
+  const lastYear = new Date(date.setFullYear(date.getFullYear() - 1))
+
+  try {
+    const createdPerDay = await InterviewSchema.aggregate()
+      .project({ dia: { $dayOfWeek: '$createdAt' } })
+      .group({
+        _id: '$dia',
+        count: { $sum: 1 },
+      })
+    // const createdPerWeek = await InterviewSchema.aggregate([
+    //   { $match: { createdAt: { $gte: currentYear } } },
+    //   {
+    //     $project: {
+    //       semanal: { $week: '$createdAt' },
+    //     },
+    //   },
+    //   {
+    //     $group: {
+    //       _id: '$semanal',
+    //       total: { $sum: 1 },
+    //     },
+    //   },
+    // ])
+
+    const createdPerWeek = await InterviewSchema.aggregate()
+      .project({ semana: { $week: '$createdAt' } })
+      .group({
+        _id: '$semana',
+        count: { $sum: 1 },
+      })
+
+    // const createdPerMonth = await InterviewSchema.aggregate([
+    //   { $match: { createdAt: { $gte: currentYear } } },
+    //   {
+    //     $project: {
+    //       mes: { $month: '$createdAt' },
+    //     },
+    //   },
+    //   {
+    //     $group: {
+    //       _id: '$mes',
+    //       total: { $sum: 1 },
+    //     },
+    //   },
+    // ])
+
+    const createdPerMonth = await InterviewSchema.aggregate()
+      .project({ mes: { $month: '$createdAt' } })
+      .group({
+        _id: '$mes',
+        count: { $sum: 1 },
+      })
+
+    // const createdPerYear = await InterviewSchema.aggregate([
+    //   { $match: { createdAt: { $gte: currentYear } } },
+    //   {
+    //     $project: {
+    //       anio: { $year: '$createdAt' },
+    //     },
+    //   },
+    //   {
+    //     $group: {
+    //       _id: '$anio',
+    //       total: { $sum: 1 },
+    //     },
+    //   },
+    // ])
+
+    const createdPerYear = await InterviewSchema.aggregate()
+      .project({ anio: { $year: '$createdAt' } })
+      .group({
+        _id: '$anio',
+        count: { $sum: 1 },
+      })
+
+    const interviewsPerTopic = await InterviewSchema.aggregate().group({
+      _id: '$topic',
+      count: { $sum: 1 },
+    })
+
+    const interviewsPerActionsDescription =
+      await InterviewSchema.aggregate().group({
+        _id: '$actionsDescription',
+        count: { $sum: 1 },
+      })
+
+    const interviewsPerReferralDepartment =
+      await InterviewSchema.aggregate().group({
+        _id: '$referralDepartment',
+        count: { $sum: 1 },
+      })
+
+    const interviewsPerStatus = await InterviewSchema.aggregate().group({
+      _id: '$status',
+      count: { $sum: 1 },
+    })
+
+    const interviewsPerBeneficiary = await InterviewSchema.aggregate().group({
+      _id: '$beneficiary',
+      count: { $sum: 1 },
+    })
+
+    const interviewsPerChaplain = await InterviewSchema.aggregate().group({
+      _id: '$userCreate',
+      count: { $sum: 1 },
+    })
+
+    console.log({
+      interviewsPerTopic,
+      interviewsPerActionsDescription,
+      interviewsPerReferralDepartment,
+      interviewsPerStatus,
+      interviewsPerBeneficiary,
+      interviewsPerChaplain,
+      createdPerDay,
+      createdPerWeek,
+      createdPerMonth,
+      createdPerYear,
+    })
+
+    res.status(200).json({
+      interviewsPerTopic,
+      interviewsPerActionsDescription,
+      interviewsPerReferralDepartment,
+      interviewsPerStatus,
+      interviewsPerBeneficiary,
+      interviewsPerChaplain,
+      createdPerDay,
+      createdPerWeek,
+      createdPerMonth,
+      createdPerYear,
+    })
+  } catch (err) {
+    res.status(500).json(err)
+  }
+}
+
 export default {
   getAllInterviews,
   createNewInterview,
   getOneInterviewById,
   updateOneInterviewById,
   deleteOneBeneficiaryById,
+  interviewStats,
 }

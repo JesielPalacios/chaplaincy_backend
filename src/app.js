@@ -12,7 +12,7 @@ import fileUpload from 'express-fileupload'
 // Initializations
 const app = express()
 createAdmin()
-// createBeneficiaries()
+createBeneficiaries()
 dotenv.config()
 
 // Settings

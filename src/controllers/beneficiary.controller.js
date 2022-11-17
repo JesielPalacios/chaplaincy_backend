@@ -272,6 +272,22 @@ async function beneficiaryStats(req, res) {
       _id: '$userCreate',
       count: { $sum: 1 },
     })
+    const maritalStatus = await BeneficiarySchema.aggregate().group({
+      _id: '$maritalStatus',
+      count: { $sum: 1 },
+    })
+    const socialStratum = await BeneficiarySchema.aggregate().group({
+      _id: '$socialStratum',
+      count: { $sum: 1 },
+    })
+    const religion = await BeneficiarySchema.aggregate().group({
+      _id: '$religion',
+      count: { $sum: 1 },
+    })
+    const categoryOcupation = await BeneficiarySchema.aggregate().group({
+      _id: '$categoryOcupation',
+      count: { $sum: 1 },
+    })
 
     console.log({
       createdPerDay,
@@ -287,6 +303,10 @@ async function beneficiaryStats(req, res) {
       birthDepartment,
       birthCity,
       userCreate,
+      maritalStatus,
+      socialStratum,
+      religion,
+      categoryOcupation,
     })
 
     res.status(200).json({
@@ -303,6 +323,10 @@ async function beneficiaryStats(req, res) {
       birthDepartment,
       birthCity,
       userCreate,
+      maritalStatus,
+      socialStratum,
+      religion,
+      categoryOcupation,
     })
   } catch (err) {
     res.status(500).json(err)

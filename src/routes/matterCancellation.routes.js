@@ -1,7 +1,7 @@
 import Router from 'express'
 import matterCancellationCtrl from '../controllers/matterCancellation.controller'
 import { verifyJwt, authJwt } from '../middlewares'
-import upload from '../middlewares/multer'
+// import upload from '../middlewares/multer'
 
 let router
 router = Router(router)

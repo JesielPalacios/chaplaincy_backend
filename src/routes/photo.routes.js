@@ -1,7 +1,7 @@
 import Router from 'express'
 import photoCtrl from '../controllers/photo.controller'
 import { verifyJwt, authJwt } from '../middlewares'
-import upload from '../middlewares/multer'
+// import upload from '../middlewares/multer'
 
 let router
 router = Router(router)
@@ -13,11 +13,11 @@ router
   .get([verifyJwt, authJwt(['admin'])], photoCtrl.photos)
 
   // CREATE A NEW PHOTO
-  .post(
-    [verifyJwt, authJwt(['admin, customer'])],
-    upload.single('image'),
-    photoCtrl.createPhoto
-  )
+  // .post(
+  //   [verifyJwt, authJwt(['admin, customer'])],
+  //   upload.single('image'),
+  //   photoCtrl.createPhoto
+  // )
 
 router
   .route('/photo/:id')

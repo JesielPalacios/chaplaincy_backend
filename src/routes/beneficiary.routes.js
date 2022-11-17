@@ -1,6 +1,7 @@
 import Router from 'express'
 import beneficiaryCtrl from '../controllers/beneficiary.controller'
 import { verifyJwt, authJwt } from '../middlewares'
+// import fileUpload from 'express-fileupload'
 
 let router
 router = Router(router)
@@ -12,7 +13,14 @@ router
   .get([verifyJwt, authJwt(['admin'])], beneficiaryCtrl.getAllBeneficiaries)
 
   // CREATE A NEW BENEFICIARY
-  .post([verifyJwt, authJwt(['admin'])], beneficiaryCtrl.createNewBeneficiary)
+  .post(
+    [verifyJwt, authJwt(['admin'])],
+    // fileUpload({
+    //   useTempFiles: true,
+    //   tempFileDir: './uploads',
+    // }),
+    beneficiaryCtrl.createNewBeneficiary
+  )
 
 router
   .route('/beneficiary/:id')
@@ -23,12 +31,20 @@ router
   // UPDATE ONE BENEFICIARY BY ID
   .put(
     [verifyJwt, authJwt(['admin'])],
+    // fileUpload({
+    //   useTempFiles: true,
+    //   tempFileDir: './uploads',
+    // }),
     beneficiaryCtrl.updateOneBeneficiaryById
   )
 
   // DELETE ONE BENEFICIARY BY ID
   .delete(
     [verifyJwt, authJwt(['admin'])],
+    // fileUpload({
+    //   useTempFiles: true,
+    //   tempFileDir: './uploads',
+    // }),
     beneficiaryCtrl.deleteOneBeneficiaryById
   )
 

@@ -202,25 +202,108 @@ async function deleteOneBeneficiaryById(req, res) {
 
 async function beneficiaryStats(req, res) {
   const date = new Date()
-  const currentYear = new Date(date.setFullYear(date.getFullYear()))
-  // const lastYear = new Date(date.setFullYear(date.getFullYear() - 1))
 
   try {
-    const data = await BeneficiarySchema.aggregate([
-      { $match: { createdAt: { $gte: currentYear } } },
-      {
-        $project: {
-          month: { $month: '$createdAt' },
-        },
-      },
-      {
-        $group: {
-          _id: '$month',
-          total: { $sum: 1 },
-        },
-      },
-    ])
-    res.status(200).json(data)
+    const createdPerDay = await BeneficiarySchema.aggregate()
+      .project({ dia: { $dayOfWeek: '$createdAt' } })
+      .group({
+        _id: '$dia',
+        count: { $sum: 1 },
+      })
+
+    const createdPerWeek = await BeneficiarySchema.aggregate()
+      .project({ semana: { $week: '$createdAt' } })
+      .group({
+        _id: '$semana',
+        count: { $sum: 1 },
+      })
+
+    const createdPerMonth = await BeneficiarySchema.aggregate()
+      .project({ mes: { $month: '$createdAt' } })
+      .group({
+        _id: '$mes',
+        count: { $sum: 1 },
+      })
+
+    const createdPerYear = await BeneficiarySchema.aggregate()
+      .project({ anio: { $year: '$createdAt' } })
+      .group({
+        _id: '$anio',
+        count: { $sum: 1 },
+      })
+
+    const gender = await BeneficiarySchema.aggregate().group({
+      _id: '$gender',
+      count: { $sum: 1 },
+    })
+
+    const typeCitizenshipNumberId = await BeneficiarySchema.aggregate().group({
+      _id: '$typeCitizenshipNumberId',
+      count: { $sum: 1 },
+    })
+
+    const academicProgram = await BeneficiarySchema.aggregate().group({
+      _id: '$academicProgram',
+      count: { $sum: 1 },
+    })
+
+    const semester = await BeneficiarySchema.aggregate().group({
+      _id: '$semester',
+      count: { $sum: 1 },
+    })
+
+    const birthDate = await BeneficiarySchema.aggregate().group({
+      _id: '$birthDate',
+      count: { $sum: 1 },
+    })
+    const birthCountry = await BeneficiarySchema.aggregate().group({
+      _id: '$birthCountry',
+      count: { $sum: 1 },
+    })
+    const birthDepartment = await BeneficiarySchema.aggregate().group({
+      _id: '$birthDepartment',
+      count: { $sum: 1 },
+    })
+    const birthCity = await BeneficiarySchema.aggregate().group({
+      _id: '$birthCity',
+      count: { $sum: 1 },
+    })
+    const userCreate = await BeneficiarySchema.aggregate().group({
+      _id: '$userCreate',
+      count: { $sum: 1 },
+    })
+
+    console.log({
+      createdPerDay,
+      createdPerWeek,
+      createdPerMonth,
+      createdPerYear,
+      gender,
+      typeCitizenshipNumberId,
+      academicProgram,
+      semester,
+      birthDate,
+      birthCountry,
+      birthDepartment,
+      birthCity,
+      userCreate,
+    })
+
+    res.status(200).json({
+      createdPerDay,
+      createdPerWeek,
+      createdPerMonth,
+      createdPerYear,
+      gender,
+      typeCitizenshipNumberId,
+      academicProgram,
+      semester,
+      birthDate,
+      birthCountry,
+      birthDepartment,
+      birthCity,
+      userCreate,
+    })
   } catch (err) {
     res.status(500).json(err)
   }

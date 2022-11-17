@@ -226,18 +226,18 @@ async function interviewStats(req, res) {
       count: { $sum: 1 },
     })
 
-    console.log({
-      interviewsPerTopic,
-      interviewsPerActionsDescription,
-      interviewsPerReferralDepartment,
-      interviewsPerStatus,
-      interviewsPerBeneficiary,
-      interviewsPerChaplain,
-      createdPerDay,
-      createdPerWeek,
-      createdPerMonth,
-      createdPerYear,
-    })
+    // console.log({
+    //   interviewsPerTopic,
+    //   interviewsPerActionsDescription,
+    //   interviewsPerReferralDepartment,
+    //   interviewsPerStatus,
+    //   interviewsPerBeneficiary,
+    //   interviewsPerChaplain,
+    //   createdPerDay,
+    //   createdPerWeek,
+    //   createdPerMonth,
+    //   createdPerYear,
+    // })
 
     res.status(200).json({
       interviewsPerTopic,

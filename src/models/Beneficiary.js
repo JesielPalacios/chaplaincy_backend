@@ -106,10 +106,10 @@ const BeneficiarySchema = new mongoose.Schema(
       default: 'Cristiano',
       enum: ['Cristiano', 'Católico', 'Otra denominación'],
     },
-    categoryOcupation: {
+    categoryOrTypeOfOcupation: {
       type: String,
       required: true,
-      default: 'Otro',
+      default: 'Estudiante de la UNAC',
       enum: [
         'Otro',
         'Estudiante de la UNAC',

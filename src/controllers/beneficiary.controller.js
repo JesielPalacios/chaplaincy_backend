@@ -210,48 +210,40 @@ async function beneficiaryStats(req, res) {
         _id: '$dia',
         count: { $sum: 1 },
       })
-
     const createdPerWeek = await BeneficiarySchema.aggregate()
       .project({ semana: { $week: '$createdAt' } })
       .group({
         _id: '$semana',
         count: { $sum: 1 },
       })
-
     const createdPerMonth = await BeneficiarySchema.aggregate()
       .project({ mes: { $month: '$createdAt' } })
       .group({
         _id: '$mes',
         count: { $sum: 1 },
       })
-
     const createdPerYear = await BeneficiarySchema.aggregate()
       .project({ anio: { $year: '$createdAt' } })
       .group({
         _id: '$anio',
         count: { $sum: 1 },
       })
-
     const gender = await BeneficiarySchema.aggregate().group({
       _id: '$gender',
       count: { $sum: 1 },
     })
-
     const typeCitizenshipNumberId = await BeneficiarySchema.aggregate().group({
       _id: '$typeCitizenshipNumberId',
       count: { $sum: 1 },
     })
-
     const academicProgram = await BeneficiarySchema.aggregate().group({
       _id: '$academicProgram',
       count: { $sum: 1 },
     })
-
     const semester = await BeneficiarySchema.aggregate().group({
       _id: '$semester',
       count: { $sum: 1 },
     })
-
     const birthDate = await BeneficiarySchema.aggregate().group({
       _id: '$birthDate',
       count: { $sum: 1 },
@@ -284,10 +276,12 @@ async function beneficiaryStats(req, res) {
       _id: '$religion',
       count: { $sum: 1 },
     })
-    const categoryOcupation = await BeneficiarySchema.aggregate().group({
-      _id: '$categoryOcupation',
-      count: { $sum: 1 },
-    })
+    const categoryOrTypeOfOcupation = await BeneficiarySchema.aggregate().group(
+      {
+        _id: '$categoryOrTypeOfOcupation',
+        count: { $sum: 1 },
+      }
+    )
 
     console.log({
       createdPerDay,
@@ -306,7 +300,7 @@ async function beneficiaryStats(req, res) {
       maritalStatus,
       socialStratum,
       religion,
-      categoryOcupation,
+      categoryOrTypeOfOcupation,
     })
 
     res.status(200).json({
@@ -326,7 +320,7 @@ async function beneficiaryStats(req, res) {
       maritalStatus,
       socialStratum,
       religion,
-      categoryOcupation,
+      categoryOrTypeOfOcupation,
     })
   } catch (err) {
     res.status(500).json(err)

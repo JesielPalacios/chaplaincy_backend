@@ -199,12 +199,6 @@ async function interviewStats(req, res) {
       count: { $sum: 1 },
     })
 
-    const interviewsPerActionsDescription =
-      await InterviewSchema.aggregate().group({
-        _id: '$actionsDescription',
-        count: { $sum: 1 },
-      })
-
     const interviewsPerReferralDepartment =
       await InterviewSchema.aggregate().group({
         _id: '$referralDepartment',
@@ -228,7 +222,6 @@ async function interviewStats(req, res) {
 
     // console.log({
     //   interviewsPerTopic,
-    //   interviewsPerActionsDescription,
     //   interviewsPerReferralDepartment,
     //   interviewsPerStatus,
     //   interviewsPerBeneficiary,
@@ -241,7 +234,6 @@ async function interviewStats(req, res) {
 
     res.status(200).json({
       interviewsPerTopic,
-      interviewsPerActionsDescription,
       interviewsPerReferralDepartment,
       interviewsPerStatus,
       interviewsPerBeneficiary,

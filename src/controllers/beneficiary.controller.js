@@ -283,25 +283,25 @@ async function beneficiaryStats(req, res) {
       }
     )
 
-    console.log({
-      createdPerDay,
-      createdPerWeek,
-      createdPerMonth,
-      createdPerYear,
-      gender,
-      typeCitizenshipNumberId,
-      academicProgram,
-      semester,
-      birthDate,
-      birthCountry,
-      birthDepartment,
-      birthCity,
-      userCreate,
-      maritalStatus,
-      socialStratum,
-      religion,
-      categoryOrTypeOfOcupation,
-    })
+    // console.log({
+    //   createdPerDay,
+    //   createdPerWeek,
+    //   createdPerMonth,
+    //   createdPerYear,
+    //   gender,
+    //   typeCitizenshipNumberId,
+    //   academicProgram,
+    //   semester,
+    //   birthDate,
+    //   birthCountry,
+    //   birthDepartment,
+    //   birthCity,
+    //   userCreate,
+    //   maritalStatus,
+    //   socialStratum,
+    //   religion,
+    //   categoryOrTypeOfOcupation,
+    // })
 
     res.status(200).json({
       createdPerDay,

@@ -2,6 +2,7 @@ import CryptoJS from 'crypto-js'
 import fs from 'fs-extra'
 import path from 'path'
 
+import UserSchema from '../models/User'
 import BeneficiarySchema from '../models/Beneficiary'
 import ImageSchema from '../models/Photo'
 
@@ -38,11 +39,16 @@ async function createNewBeneficiary(req, res) {
         reqBody.gender ||
         reqBody.typeCitizenshipNumberId ||
         reqBody.citizenshipNumberId ||
-        reqBody.address ||
+        reqBody.religion ||
+        reqBody.maritalStatus ||
+        reqBody.socialStratum ||
+        reqBody.categoryOrTypeOfOcupation ||
         reqBody.birthDate ||
         reqBody.birthCountry ||
         reqBody.birthDepartment ||
-        reqBody.birthCity
+        reqBody.birthCity ||
+        reqBody.academicProgram ||
+        reqBody.semester
       )
     ) {
       return true
@@ -55,6 +61,8 @@ async function createNewBeneficiary(req, res) {
     return res.status(400).json({ message: 'Some info is missing' })
   }
 
+  const storedUser = await UserSchema.findById(req.user.id)
+
   const storedBeneficiary = await BeneficiarySchema.findOne({
     citizenshipNumberId: req.body.citizenshipNumberId,
   })
@@ -63,8 +71,8 @@ async function createNewBeneficiary(req, res) {
     res.status(400).json({ message: 'Beneficiary already exist' })
   } else {
     try {
-      req.body.userCreate = req.user.id
-      req.body.userUpdate = req.user.id
+      req.body.userCreate = storedUser.citizenshipNumberId
+      req.body.userUpdate = storedUser.citizenshipNumberId
 
       let newBeneficiary = req.files
         ? new BeneficiarySchema({
@@ -85,7 +93,7 @@ async function createNewBeneficiary(req, res) {
           imagePath: '/uploads/' + file.name.split(' ').join(''),
           userCreate: req.user.id,
           userUpdate: req.user.id,
-          photoSubject: newBeneficiary._id.valueOf(),
+          photoSubject: newBeneficiary.citizenshipNumberId,
         })
         await newImage.save()
 

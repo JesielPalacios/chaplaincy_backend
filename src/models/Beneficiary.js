@@ -214,7 +214,6 @@ const BeneficiarySchema = new mongoose.Schema(
     },
     studentCode: {
       type: String,
-      required: true,
       unique: true,
       max: 11,
       min: 11,

@@ -10,3 +10,5 @@ app.listen(app.get('port'), () => {
   console.log('The backend server is ready running on port ' + app.get('port'))
   console.log('🔥 Visit http://localhost:' + app.get('port'))
 })
+
+// console.clear()

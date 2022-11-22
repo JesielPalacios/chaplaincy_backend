@@ -4,7 +4,7 @@ import UserSchema from '../models/User'
 // let userId
 
 export const verifyToken = async (req, res, next) => {
-  console.clear()
+  // console.clear()
   
   let token = req.headers['authorization']
   // let jwtPayloadDecoded

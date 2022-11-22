@@ -8,7 +8,75 @@ let userUpdate = '1234567890'
 
 export const createAdmin = async () => {
   // check for an existing admin user--------------------------
-  const user = await UserSchema.findOne({
+  let user = await UserSchema.findOne({
+    email: 'walter.arboleda@capellania.unac.edu.co',
+  })
+
+  try {
+    if (!user) {
+      // create a new admin user
+      await UserSchema.create({
+        role: 'admin',
+        email: 'walter.arboleda@capellania.unac.edu.co',
+        password: encryptPassword('bZYsu7Nsr8MO6lP3'),
+        firstName: 'Walter',
+        secondName: 'Hugo',
+        firstSurname: 'Arboleda',
+        secondSurname: 'Mazo',
+        gender: 'Masculino',
+        typeCitizenshipNumberId: 'Cédula de ciudadanía',
+        citizenshipNumberId: '2345678901',
+        cellPhoneNumber: '3012783279',
+        address: 'wqwqwdqwdqwdqwd',
+        birthDate: '2000-7-17',
+        birthCountry: 'Colombia',
+        birthDepartment: 'Antioquia',
+        birthCity: 'Medellín',
+        userCreate: '1000000',
+        userUpdate: '1000000',
+      })
+      console.log('admin user created!🔥🔥🔥')
+    }
+  } catch (error) {
+    console.log(error)
+  }
+
+  // check for an existing admin user--------------------------
+  user = await UserSchema.findOne({
+    email: 'jaime.blanco@capellania.unac.edu.co',
+  })
+
+  try {
+    if (!user) {
+      // create a new admin user
+      await UserSchema.create({
+        role: 'admin',
+        email: 'jaime.blanco@capellania.unac.edu.co',
+        password: encryptPassword('YtPjIdPcPtkKqRKI'),
+        firstName: 'Jaime',
+        secondName: 'undefined',
+        firstSurname: 'Blanco',
+        secondSurname: 'López',
+        gender: 'Masculino',
+        typeCitizenshipNumberId: 'Cédula de ciudadanía',
+        citizenshipNumberId: '3456789012',
+        cellPhoneNumber: '3041180897',
+        address: 'wqwqwdqwdqwdqwd',
+        birthDate: '2000-7-17',
+        birthCountry: 'Colombia',
+        birthDepartment: 'Antioquia',
+        birthCity: 'Medellín',
+        userCreate: '1000000',
+        userUpdate: '1000000',
+      })
+      console.log('admin user created!🔥🔥🔥')
+    }
+  } catch (error) {
+    console.log(error)
+  }
+
+  // check for an existing admin user--------------------------
+  user = await UserSchema.findOne({
     email: 'luis.angel@capellania.unac.edu.co',
   })
 
@@ -17,8 +85,8 @@ export const createAdmin = async () => {
       // create a new admin user
       await UserSchema.create({
         role: 'admin',
-        email: process.env.EMAIL,
-        password: encryptPassword(process.env.PASSWORD),
+        email: 'luis.angel@capellania.unac.edu.co',
+        password: encryptPassword('EDrIoLBSnoFFa4Bv'),
         firstName: 'Luis',
         secondName: 'Enrique',
         firstSurname: 'Peña',
